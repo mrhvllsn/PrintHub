@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   BASE STYLES
+========================================================= */
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  body {
+    @apply m-0 bg-slate-50 text-slate-900 antialiased;
+    @apply dark:bg-slate-950 dark:text-slate-100;
+
+    font-family:
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      sans-serif;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    @apply outline-none;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply w-full rounded-xl;
+    @apply border border-slate-200;
+    @apply bg-white px-3 py-2.5 text-sm;
+    @apply focus:border-brand focus:ring-2 focus:ring-blue-100;
+    @apply dark:border-slate-700 dark:bg-slate-900;
+    @apply dark:focus:ring-blue-950;
+  }
+
+  label {
+    @apply mb-1 block text-sm font-medium;
+  }
+}
+
+/* =========================================================
+   REUSABLE COMPONENT STYLES
+========================================================= */
+
+@layer components {
+  .card {
+    @apply rounded-2xl;
+    @apply border border-slate-200;
+    @apply bg-white p-5 shadow-sm;
+    @apply dark:border-slate-800 dark:bg-slate-900;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply rounded-xl px-4 py-2.5;
+    @apply text-sm font-semibold;
+    @apply transition;
+    @apply disabled:cursor-not-allowed;
+    @apply disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply rounded-xl px-4 py-2.5;
+    @apply bg-brand text-sm font-semibold text-white;
+    @apply transition hover:bg-blue-700;
+    @apply disabled:cursor-not-allowed;
+    @apply disabled:opacity-50;
+  }
+
+  .btn-light {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply rounded-xl px-4 py-2.5;
+    @apply border border-slate-200;
+    @apply bg-white text-sm font-semibold;
+    @apply transition hover:bg-slate-50;
+    @apply disabled:cursor-not-allowed;
+    @apply disabled:opacity-50;
+    @apply dark:border-slate-700 dark:bg-slate-900;
+    @apply dark:hover:bg-slate-800;
+  }
+
+  .badge {
+    @apply inline-flex rounded-full;
+    @apply px-2.5 py-1;
+    @apply text-xs font-semibold;
+  }
+}

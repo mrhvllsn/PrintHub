@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Secret environment files
+.env
+client/.env
+server/.env
+
+# Uploaded files
+uploads/*
+!uploads/.gitkeep
+
+# Build folders
+client/dist/
+dist/
+
+# Server logs
+server/logs/
+*.log
+npm-debug.log*
+
+# VS Code and Windows files
+.vscode/
+Thumbs.db
+.DS_Store
