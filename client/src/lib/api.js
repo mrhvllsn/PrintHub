@@ -1,14 +1,20 @@
-export const API = "/api";
+export const API = (
+  import.meta.env.VITE_API_URL || "/api"
+).replace(/\/$/, "");
 
-/**
- * Sends requests to the PrintHub backend.
- */
+export function apiFileUrl(path) {
+  const cleanPath = path.startsWith("/")
+    ? path
+    : `/${path}`;
+
+  return `${API}${cleanPath}`;
+}
+
 export async function api(path, options = {}) {
   const token = localStorage.getItem("token");
-  const isFormData = options.body instanceof FormData;
 
   const headers = {
-    ...(isFormData
+    ...(options.body instanceof FormData
       ? {}
       : {
           "Content-Type": "application/json",
@@ -20,21 +26,23 @@ export async function api(path, options = {}) {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API}${path}`, {
-    ...options,
-    headers,
-  });
+  const cleanPath = path.startsWith("/")
+    ? path
+    : `/${path}`;
+
+  const response = await fetch(
+    `${API}${cleanPath}`,
+    {
+      ...options,
+      headers,
+    },
+  );
 
   const data = await response
     .json()
     .catch(() => ({}));
 
   if (!response.ok) {
-    if (response.status === 401) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-    }
-
     throw new Error(
       data.message || "Something went wrong.",
     );
@@ -43,36 +51,21 @@ export async function api(path, options = {}) {
   return data;
 }
 
-/**
- * Converts a number into Philippine peso format.
- *
- * Example:
- * 1000 becomes ₱1,000.00
- */
-export function peso(value) {
+export function peso(number) {
   return new Intl.NumberFormat("en-PH", {
     style: "currency",
     currency: "PHP",
-  }).format(Number(value || 0));
+  }).format(Number(number || 0));
 }
 
-/**
- * Displays dates using Philippine date and time.
- */
-export function dt(value) {
-  if (!value) {
+export function dt(date) {
+  if (!date) {
     return "—";
-  }
-
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return "Invalid date";
   }
 
   return new Intl.DateTimeFormat("en-PH", {
     dateStyle: "medium",
     timeStyle: "short",
     timeZone: "Asia/Manila",
-  }).format(date);
+  }).format(new Date(date));
 }
